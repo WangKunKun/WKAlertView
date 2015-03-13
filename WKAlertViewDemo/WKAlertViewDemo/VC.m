@@ -10,11 +10,8 @@
 #import "WKAlertView.h"
 
 @interface VC ()
-{
-#warning 如何实现像iOS自带的alertView的使用方法
-    UIWindow *__sheetWindow ;//window必须为全局变量或成员变量
+<WKAlertViewDelegate>
 
-}
 @end
 
 @implementation VC
@@ -69,14 +66,21 @@
             break;
     }
     //为成员变量Window赋值则立即显示Window
-    __sheetWindow = [WKAlertView showAlertViewWithStyle:sender.tag - 59 title:title detail:detail canleButtonTitle:cancle okButtonTitle:ok callBlock:^(MyWindowClick buttonIndex) {
+    self.myAlertView = [WKAlertView showAlertViewWithStyle:sender.tag - 59 title:title detail:detail canleButtonTitle:cancle okButtonTitle:ok callBlock:^(MyWindowClick buttonIndex) {
         //Window隐藏，并置为nil，释放内存
-        __sheetWindow.hidden = YES;
-        __sheetWindow = nil;
+        self.myAlertView.hidden = YES;
+        self.myAlertView = nil;
 
     }];
+    
+//    self.myAlertView = [WKAlertView showAlertViewWithStyle:sender.tag - 59 title:title detail:detail canleButtonTitle:cancle okButtonTitle:ok delegate:self];
 }
 
+- (void)alertViewClick:(WKAlertViewStyle)type
+{
+    self.myAlertView.hidden = YES;
+    self.myAlertView = nil;
+}
 
 
 @end

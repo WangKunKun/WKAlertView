@@ -36,7 +36,8 @@ NSInteger const Button_Font = 16;
     UIButton * _OkButton;//确定按钮
     UIButton * _canleButton;//取消按钮
 
-    
+    CAShapeLayer * _showLayer;
+    CAShapeLayer * _hideLayer;
     
 }
 @property (nonatomic, assign) WKAlertViewStyle style;
@@ -66,6 +67,13 @@ NSInteger const Button_Font = 16;
 + (instancetype)showAlertViewWithTitle:(NSString *)title detail:(NSString *)detail canleButtonTitle:(NSString *)canle okButtonTitle:(NSString *)ok callBlock:(callBack)callBack
 {
   return [self showAlertViewWithStyle:WKAlertViewStyleSuccess title:title detail:detail canleButtonTitle:canle okButtonTitle:ok callBlock:callBack];
+}
+
++ (instancetype)showAlertViewWithStyle:(WKAlertViewStyle)style title:(NSString *)title detail:(NSString *)detail canleButtonTitle:(NSString *)canle okButtonTitle:(NSString *)ok delegate:(id<WKAlertViewDelegate>)delegate
+{
+    WKAlertView * temp = [self showAlertViewWithStyle:style title:title detail:detail canleButtonTitle:canle okButtonTitle:ok callBlock:nil];
+    temp.WKAlertViewDelegate = delegate;
+    return temp;
 }
 //单例
 + (instancetype)shared
@@ -102,7 +110,18 @@ NSInteger const Button_Font = 16;
 {
     [self logoInit];
     [self controlsInit];
+    [self layerInit];
 }
+
+- (void)layerInit
+{
+    _showLayer = [[CAShapeLayer alloc] init];
+    _hideLayer = [[CAShapeLayer alloc] init];
+    _hideLayer.fillColor = [UIColor clearColor].CGColor;
+    _hideLayer.strokeColor = [UIColor whiteColor].CGColor;
+    _hideLayer.lineWidth = 8;
+}
+
 /**
  *  @Author wang kun
  *
@@ -168,29 +187,34 @@ NSInteger const Button_Font = 16;
  *
  *  初始化logo视图——画布
  */
-#warning 需完善画布的清除，不适用移除、新建的办法
 - (void)logoInit
 {
-    //移除画布
-    [_logoView removeFromSuperview];
-    _logoView = nil;
-    //新建画布
-    _logoView                     = [UIView new];
-    _logoView.center              = CGPointMake(self.center.x, self.center.y - 40);
-    _logoView.bounds              = CGRectMake(0, 0, 320 / 1.5, 320 / 1.5);
-    _logoView.backgroundColor     = [UIColor whiteColor];
-    _logoView.layer.cornerRadius  = 10;
-    _logoView.layer.shadowColor   = [UIColor blackColor].CGColor;
-    _logoView.layer.shadowOffset  = CGSizeMake(0, 5);
-    _logoView.layer.shadowOpacity = 0.3f;
-    _logoView.layer.shadowRadius  = 10.0f;
     
-    //保证画布位于所有视图层级的最下方
-    if (_titleLabel != nil) {
-        [self insertSubview:_logoView belowSubview:_titleLabel];
+    
+
+    if (_logoView == nil) {
+    
+        //新建画布
+        _logoView                     = [UIView new];
+        _logoView.center              = CGPointMake(self.center.x, self.center.y - 40);
+        _logoView.bounds              = CGRectMake(0, 0, 320 / 1.5, 320 / 1.5);
+        _logoView.backgroundColor     = [UIColor whiteColor];
+        _logoView.layer.cornerRadius  = 10;
+        _logoView.layer.shadowColor   = [UIColor blackColor].CGColor;
+        _logoView.layer.shadowOffset  = CGSizeMake(0, 5);
+        _logoView.layer.shadowOpacity = 0.3f;
+        _logoView.layer.shadowRadius  = 10.0f;
+        [self addSubview:_logoView];
+
     }
     else
-    [self addSubview:_logoView];
+    {
+        [_showLayer removeAllAnimations];
+        [_hideLayer removeAllAnimations];
+        [_showLayer removeFromSuperlayer];
+        [_hideLayer removeFromSuperlayer];
+    }
+    
 }
 /**
  *  @author by wangkun, 15-03-11 17:03:53
@@ -298,22 +322,18 @@ NSInteger const Button_Font = 16;
     CGPoint p2 = CGPointMake(x+35,y-20);
     [path addLineToPoint:p2];
     //新建图层——绘制上面的圆圈和勾
-    CAShapeLayer *layer = [[CAShapeLayer alloc] init];
-    layer.fillColor = [UIColor clearColor].CGColor;
-    layer.strokeColor = [UIColor greenColor].CGColor;
-    layer.lineWidth = 5;
-    layer.path = path.CGPath;
+    _showLayer.fillColor = [UIColor clearColor].CGColor;
+    _showLayer.strokeColor = [UIColor greenColor].CGColor;
+    _showLayer.lineWidth = 5;
+    _showLayer.path = path.CGPath;
     
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:NSStringFromSelector(@selector(strokeEnd))];
     animation.fromValue = @0;
     animation.toValue = @1;
     animation.duration = 0.5;
-    [layer addAnimation:animation forKey:NSStringFromSelector(@selector(strokeEnd))];
+    [_showLayer addAnimation:animation forKey:NSStringFromSelector(@selector(strokeEnd))];
     
-    
-    
-    
-    [_logoView.layer addSublayer:layer];
+    [_logoView.layer addSublayer:_showLayer];
 }
 
 /**
@@ -324,7 +344,6 @@ NSInteger const Button_Font = 16;
 -(void) drawWaring
 {
     
-//    [_logoView removeFromSuperview];
     [self logoInit];
     //自绘制图标中心店
     UIBezierPath *path = [UIBezierPath bezierPath];
@@ -356,21 +375,20 @@ NSInteger const Button_Font = 16;
     
     
     //新建图层——绘制上述路径
-    CAShapeLayer *layer = [[CAShapeLayer alloc] init];
-    layer.fillColor = [UIColor clearColor].CGColor;
-    layer.strokeColor = [UIColor orangeColor].CGColor;
-    layer.lineWidth = 5;
-    layer.path = path.CGPath;
+    _showLayer.fillColor = [UIColor clearColor].CGColor;
+    _showLayer.strokeColor = [UIColor orangeColor].CGColor;
+    _showLayer.lineWidth = 5;
+    _showLayer.path = path.CGPath;
     
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:NSStringFromSelector(@selector(strokeEnd))];
     animation.fromValue = @0;
     animation.toValue = @1;
     animation.duration = 0.5;
-    [layer addAnimation:animation forKey:NSStringFromSelector(@selector(strokeEnd))];
-    layer.lineJoin = kCALineCapRound;
-    layer.lineCap = kCALineCapRound;
+    [_showLayer addAnimation:animation forKey:NSStringFromSelector(@selector(strokeEnd))];
+    _showLayer.lineJoin = kCALineCapRound;
+    _showLayer.lineCap = kCALineCapRound;
     
-    [_logoView.layer addSublayer:layer];
+    [_logoView.layer addSublayer:_showLayer];
 }
 
 /**
@@ -403,20 +421,19 @@ NSInteger const Button_Font = 16;
     [path addLineToPoint:p2];
     
     //新建图层——绘制上述路径
-    CAShapeLayer *layer = [[CAShapeLayer alloc] init];
-    layer.fillColor = [UIColor clearColor].CGColor;
-    layer.strokeColor = [UIColor redColor].CGColor;
-    layer.lineWidth = 5;
-    layer.path = path.CGPath;
+    _showLayer.fillColor = [UIColor clearColor].CGColor;
+    _showLayer.strokeColor = [UIColor redColor].CGColor;
+    _showLayer.lineWidth = 5;
+    _showLayer.path = path.CGPath;
 #warning 使用NSStringFromSelector(@selector(strokeEnd))作为KeyPath的作用，绘制动画每一次Show均重复运行
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:NSStringFromSelector(@selector(strokeEnd))];
     animation.fromValue = @0;
     animation.toValue = @1;
     animation.duration = 0.5;
     //和上对应
-    [layer addAnimation:animation forKey:NSStringFromSelector(@selector(strokeEnd))];
+    [_showLayer addAnimation:animation forKey:NSStringFromSelector(@selector(strokeEnd))];
     
-    [_logoView.layer addSublayer:layer];
+    [_logoView.layer addSublayer:_showLayer];
 }
 
 #pragma mark 擦图  —— 实质是画一层白色的覆盖上去
@@ -479,21 +496,18 @@ NSInteger const Button_Font = 16;
     
     
     //新建图层——绘制上述路径
-    CAShapeLayer *layer = [[CAShapeLayer alloc] init];
-    layer.fillColor = [UIColor clearColor].CGColor;
-    layer.strokeColor = [UIColor whiteColor].CGColor;
-    layer.lineWidth = 8;
-    layer.path = path.CGPath;
+
+    _hideLayer.path = path.CGPath;
     
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:NSStringFromSelector(@selector(strokeEnd))];
     animation.fromValue = @0;
     animation.toValue = @1;
     animation.duration = 0.5;
-    [layer addAnimation:animation forKey:NSStringFromSelector(@selector(strokeEnd))];
-    layer.lineJoin = kCALineCapRound;
-    layer.lineCap = kCALineCapRound;
+    [_hideLayer addAnimation:animation forKey:NSStringFromSelector(@selector(strokeEnd))];
+    _hideLayer.lineJoin = kCALineCapRound;
+    _hideLayer.lineCap = kCALineCapRound;
     
-    [_logoView.layer addSublayer:layer];
+    [_logoView.layer addSublayer:_hideLayer];
 }
 
 - (void)hideWrong
@@ -520,13 +534,8 @@ NSInteger const Button_Font = 16;
 
     UIBezierPath * path1 = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(x, y, Logo_Size * 2, Logo_Size * 2) cornerRadius:5];
     [path appendPath:path1];
-    
-    //新建图层——绘制上述路径
-    CAShapeLayer *layer = [[CAShapeLayer alloc] init];
-    layer.fillColor = [UIColor clearColor].CGColor;
-    layer.strokeColor = [UIColor whiteColor].CGColor;
-    layer.lineWidth = 8;
-    layer.path = path.CGPath;
+
+    _hideLayer.path = path.CGPath;
     
 #warning 使用NSStringFromSelector(@selector(strokeEnd))作为KeyPath的作用，绘制动画每一次Show均重复运行
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:NSStringFromSelector(@selector(strokeEnd))];
@@ -534,9 +543,9 @@ NSInteger const Button_Font = 16;
     animation.toValue = @1;
     animation.duration = 0.5;
     //和上对应
-    [layer addAnimation:animation forKey:NSStringFromSelector(@selector(strokeEnd))];
+    [_hideLayer addAnimation:animation forKey:NSStringFromSelector(@selector(strokeEnd))];
     
-    [_logoView.layer addSublayer:layer];
+    [_logoView.layer addSublayer:_hideLayer];
 }
 
 -(void)hideRight
@@ -557,18 +566,15 @@ NSInteger const Button_Font = 16;
     UIBezierPath * path1 = [UIBezierPath  bezierPathWithArcCenter:pathCenter radius:Logo_Size startAngle:0 endAngle:M_PI * 2 clockwise:YES];
     [path appendPath:path1];
     //新建图层——绘制上面的圆圈和勾
-    CAShapeLayer *layer = [[CAShapeLayer alloc] init];
-    layer.fillColor = [UIColor whiteColor].CGColor;
-    layer.strokeColor = [UIColor whiteColor].CGColor;
-    layer.lineWidth = 8;
-    layer.path = path.CGPath;
+
+    _hideLayer.path = path.CGPath;
     
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:NSStringFromSelector(@selector(strokeEnd))];
     animation.fromValue = @0;
     animation.toValue = @1;
     animation.duration = 0.5;
-    [layer addAnimation:animation forKey:NSStringFromSelector(@selector(strokeEnd))];
-    [_logoView.layer addSublayer:layer];
+    [_hideLayer addAnimation:animation forKey:NSStringFromSelector(@selector(strokeEnd))];
+    [_logoView.layer addSublayer:_hideLayer];
     
 }
 
@@ -586,13 +592,14 @@ NSInteger const Button_Font = 16;
 
 - (void)showControls
 {
+    
     [UIView animateWithDuration:0.5 animations:^{
         _titleLabel.alpha = 1;
         _detailLabel.alpha = 1;
         _OkButton.alpha = 1;
         _canleButton.alpha = 1;
         _logoView.alpha = 1;
-    }];
+    } ];
 }
 /**
  *  @author by wangkun, 15-03-11 17:03:29
@@ -605,8 +612,15 @@ NSInteger const Button_Font = 16;
 {
     [self hideLayer];
     [self hideControls];
+
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.clickBlock(sender.tag - TAG);
+        if (_WKAlertViewDelegate && [_WKAlertViewDelegate respondsToSelector:@selector(alertViewClick:)] ) {
+            [_WKAlertViewDelegate alertViewClick:sender.tag - TAG ];
+        }
+        else if(_clickBlock != nil)
+        {
+            self.clickBlock(sender.tag - TAG);
+        }
     });
     
 }

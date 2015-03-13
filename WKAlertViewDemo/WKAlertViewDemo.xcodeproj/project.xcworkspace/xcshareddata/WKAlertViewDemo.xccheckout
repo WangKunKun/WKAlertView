@@ -12,20 +12,24 @@
 	<dict>
 		<key>7AAC7D78BDFFCAA617DFEF71DF3863C3C2648B15</key>
 		<string>https://github.com/WangKunKun/MyDemo.git</string>
+		<key>A3E5456093EADF6759909C99FB8A58358FDB9082</key>
+		<string>https://github.com/WangKunKun/WKAlertView.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>WKAlertViewDemo/WKAlertViewDemo.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>7AAC7D78BDFFCAA617DFEF71DF3863C3C2648B15</key>
+		<string>../../../../MyDemo</string>
+		<key>A3E5456093EADF6759909C99FB8A58358FDB9082</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/WangKunKun/MyDemo.git</string>
+	<string>https://github.com/WangKunKun/WKAlertView.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>7AAC7D78BDFFCAA617DFEF71DF3863C3C2648B15</string>
+	<string>A3E5456093EADF6759909C99FB8A58358FDB9082</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
@@ -35,6 +39,14 @@
 			<string>7AAC7D78BDFFCAA617DFEF71DF3863C3C2648B15</string>
 			<key>IDESourceControlWCCName</key>
 			<string>MyDemo</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>A3E5456093EADF6759909C99FB8A58358FDB9082</string>
+			<key>IDESourceControlWCCName</key>
+			<string>WKAlertView</string>
 		</dict>
 	</array>
 </dict>

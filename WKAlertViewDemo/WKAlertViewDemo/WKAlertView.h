@@ -47,10 +47,17 @@ typedef NS_ENUM(NSInteger, WKAlertViewStyle)
 
 typedef void (^callBack)(MyWindowClick buttonIndex);
 
+@protocol WKAlertViewDelegate <NSObject>
+
+- (void)alertViewClick:(WKAlertViewStyle)type;
+
+@end
+
 
 @interface WKAlertView : UIWindow
 
 @property (nonatomic, copy) callBack clickBlock ;//按钮点击事件的回调
+@property (nonatomic, assign) id <WKAlertViewDelegate> WKAlertViewDelegate;
 
 + (instancetype)shared;
 
@@ -71,5 +78,8 @@ typedef void (^callBack)(MyWindowClick buttonIndex);
 + (instancetype)showAlertViewWithStyle:(WKAlertViewStyle)style title:(NSString *)title detail:(NSString *)detail canleButtonTitle:(NSString *)canle okButtonTitle:(NSString *)ok callBlock:(callBack)callBack;
 //默认样式创建AlertView
 + (instancetype)showAlertViewWithTitle:(NSString *)title detail:(NSString *)detail canleButtonTitle:(NSString *)canle okButtonTitle:(NSString *)ok callBlock:(callBack)callBack;
+
++ (instancetype)showAlertViewWithStyle:(WKAlertViewStyle)style title:(NSString *)title detail:(NSString *)detail canleButtonTitle:(NSString *)canle okButtonTitle:(NSString *)ok delegate:(id<WKAlertViewDelegate>)delegate;
+
 
 @end

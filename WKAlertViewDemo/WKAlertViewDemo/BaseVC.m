@@ -1,12 +1,14 @@
 //
-//  VC.h
+//  BaseVC.m
 //  WKAlertViewDemo
 //
-//  Created by 王琨 on 15-3-11.
+//  Created by apple on 15-3-13.
 //  Copyright (c) 2015年 王琨. All rights reserved.
 //
 
 #import "BaseVC.h"
-@interface VC : BaseVC
+
+@implementation BaseVC
+
 
 @end
