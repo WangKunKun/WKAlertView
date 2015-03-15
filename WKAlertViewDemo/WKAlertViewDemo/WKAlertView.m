@@ -612,6 +612,7 @@ NSInteger const Button_Font = 16;
 {
     [self hideLayer];
     [self hideControls];
+    self.hidden = YES;
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if (_WKAlertViewDelegate && [_WKAlertViewDelegate respondsToSelector:@selector(alertViewClick:)] ) {

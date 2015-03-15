@@ -28,7 +28,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		18B418D21AB3075400F6C906 /* UIViewController_WKAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIViewController_WKAlertView.h; sourceTree = "<group>"; };
 		18B418D31AB3084800F6C906 /* BaseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseVC.h; sourceTree = "<group>"; };
 		18B418D41AB3084800F6C906 /* BaseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseVC.m; sourceTree = "<group>"; };
 		EA561B601AB0112900559D26 /* WKAlertViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WKAlertViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,7 +91,6 @@
 				EA561B871AB0115000559D26 /* VC.m */,
 				18B418D31AB3084800F6C906 /* BaseVC.h */,
 				18B418D41AB3084800F6C906 /* BaseVC.m */,
-				18B418D21AB3075400F6C906 /* UIViewController_WKAlertView.h */,
 				EA561B831AB0114100559D26 /* WKAlertView.h */,
 				EA561B841AB0114100559D26 /* WKAlertView.m */,
 				EA561B6A1AB0112900559D26 /* Images.xcassets */,

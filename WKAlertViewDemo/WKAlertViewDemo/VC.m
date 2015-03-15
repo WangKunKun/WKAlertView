@@ -65,20 +65,19 @@
         default:
             break;
     }
+#pragma mark Block
     //为成员变量Window赋值则立即显示Window
     self.myAlertView = [WKAlertView showAlertViewWithStyle:sender.tag - 59 title:title detail:detail canleButtonTitle:cancle okButtonTitle:ok callBlock:^(MyWindowClick buttonIndex) {
         //Window隐藏，并置为nil，释放内存
-        self.myAlertView.hidden = YES;
         self.myAlertView = nil;
 
     }];
-    
+#pragma mark Delegate
 //    self.myAlertView = [WKAlertView showAlertViewWithStyle:sender.tag - 59 title:title detail:detail canleButtonTitle:cancle okButtonTitle:ok delegate:self];
 }
 
 - (void)alertViewClick:(WKAlertViewStyle)type
 {
-    self.myAlertView.hidden = YES;
     self.myAlertView = nil;
 }
 
