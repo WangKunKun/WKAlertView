@@ -52,6 +52,7 @@ NSInteger const Button_Font = 16;
 + (instancetype)showAlertViewWithStyle:(WKAlertViewStyle)style title:(NSString *)title detail:(NSString *)detail canleButtonTitle:(NSString *)canle okButtonTitle:(NSString *)ok callBlock:(callBack)callBack
 {
     WKAlertView * temp =  [self shared];
+    temp.hidden = YES;
     temp.style = style;
     [temp drawLayer];
     [temp addButtonTitleWithCancle:canle OK:ok];
@@ -59,9 +60,11 @@ NSInteger const Button_Font = 16;
     [temp showControls];
     [temp setClickBlock:nil];//释放掉之前的Block
     [temp setClickBlock:callBack];
-    [temp setHidden:NO];//设置为不隐藏
+
     return  [self shared];
 }
+
+
 
 
 + (instancetype)showAlertViewWithTitle:(NSString *)title detail:(NSString *)detail canleButtonTitle:(NSString *)canle okButtonTitle:(NSString *)ok callBlock:(callBack)callBack
@@ -271,7 +274,24 @@ NSInteger const Button_Font = 16;
 
 
 #pragma mark 画图
+- (void)show
+{
+#warning 注册可以响应键盘事件
+    [[WKAlertView shared] makeKeyWindow];
+    [WKAlertView shared].hidden = NO;
+}
 
+- (void)showControls
+{
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        _titleLabel.alpha = 1;
+        _detailLabel.alpha = 1;
+        _OkButton.alpha = 1;
+        _canleButton.alpha = 1;
+        _logoView.alpha = 1;
+    } ];
+}
 
 - (void)drawLayer
 {
@@ -438,6 +458,14 @@ NSInteger const Button_Font = 16;
 
 #pragma mark 擦图  —— 实质是画一层白色的覆盖上去
 
+- (void)hide
+{
+    [self hideLayer];
+    [self hideControls];
+#warning 取消注册为keyWindow
+    [self resignKeyWindow];
+}
+
 - (void)hideLayer
 {
     switch (self.style) {
@@ -590,17 +618,7 @@ NSInteger const Button_Font = 16;
     }];
 }
 
-- (void)showControls
-{
-    
-    [UIView animateWithDuration:0.5 animations:^{
-        _titleLabel.alpha = 1;
-        _detailLabel.alpha = 1;
-        _OkButton.alpha = 1;
-        _canleButton.alpha = 1;
-        _logoView.alpha = 1;
-    } ];
-}
+
 /**
  *  @author by wangkun, 15-03-11 17:03:29
  *
@@ -608,10 +626,12 @@ NSInteger const Button_Font = 16;
  *
  *  @param sender 按钮
  */
+
+
+
 - (void)buttonClick:(UIButton *)sender
 {
-    [self hideLayer];
-    [self hideControls];
+    [self hide];
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.hidden = YES;

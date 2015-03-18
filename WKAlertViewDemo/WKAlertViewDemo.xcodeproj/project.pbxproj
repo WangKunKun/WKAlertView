@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		18B418D51AB3084800F6C906 /* BaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B418D41AB3084800F6C906 /* BaseVC.m */; };
 		EA561B661AB0112900559D26 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EA561B651AB0112900559D26 /* main.m */; };
 		EA561B691AB0112900559D26 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA561B681AB0112900559D26 /* AppDelegate.m */; };
 		EA561B6B1AB0112900559D26 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA561B6A1AB0112900559D26 /* Images.xcassets */; };
@@ -28,8 +27,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		18B418D31AB3084800F6C906 /* BaseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseVC.h; sourceTree = "<group>"; };
-		18B418D41AB3084800F6C906 /* BaseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseVC.m; sourceTree = "<group>"; };
 		EA561B601AB0112900559D26 /* WKAlertViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WKAlertViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA561B641AB0112900559D26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA561B651AB0112900559D26 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -89,8 +86,6 @@
 				EA561B681AB0112900559D26 /* AppDelegate.m */,
 				EA561B861AB0115000559D26 /* VC.h */,
 				EA561B871AB0115000559D26 /* VC.m */,
-				18B418D31AB3084800F6C906 /* BaseVC.h */,
-				18B418D41AB3084800F6C906 /* BaseVC.m */,
 				EA561B831AB0114100559D26 /* WKAlertView.h */,
 				EA561B841AB0114100559D26 /* WKAlertView.m */,
 				EA561B6A1AB0112900559D26 /* Images.xcassets */,
@@ -228,7 +223,6 @@
 				EA561B881AB0115000559D26 /* VC.m in Sources */,
 				EA561B851AB0114100559D26 /* WKAlertView.m in Sources */,
 				EA561B691AB0112900559D26 /* AppDelegate.m in Sources */,
-				18B418D51AB3084800F6C906 /* BaseVC.m in Sources */,
 				EA561B661AB0112900559D26 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

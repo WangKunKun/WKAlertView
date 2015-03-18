@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 王琨. All rights reserved.
 //
 
-#import "BaseVC.h"
-@interface VC : BaseVC
+#import <UIKit/UIKit.h>
+@interface VC : UIViewController
 
 @end

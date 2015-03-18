@@ -60,7 +60,7 @@ typedef void (^callBack)(MyWindowClick buttonIndex);
 @property (nonatomic, assign) id <WKAlertViewDelegate> WKAlertViewDelegate;
 
 + (instancetype)shared;
-
+- (void)show;
 /**
  *  @Author wang kun
  *
