@@ -16,6 +16,8 @@
 #define SCREEN_Width   [UIScreen mainScreen].bounds.size.width
 #define SCREEN_Height   [UIScreen mainScreen].bounds.size.height
 
+//window的显示等级
+#define SHOW_LEVEL 1000
 NSUInteger const Button_Size_Width = 80;
 NSUInteger const Button_Size_Height = 30;
 
@@ -54,6 +56,7 @@ NSInteger const Button_Font = 16;
     WKAlertView * temp =  [self shared];
     temp.hidden = YES;
     temp.style = style;
+    temp.windowLevel = SHOW_LEVEL;
     [temp drawLayer];
     [temp addButtonTitleWithCancle:canle OK:ok];
     [temp addTitle:title detail:detail];
@@ -119,10 +122,14 @@ NSInteger const Button_Font = 16;
 - (void)layerInit
 {
     _showLayer = [[CAShapeLayer alloc] init];
+    _showLayer.fillColor = [UIColor clearColor].CGColor;
+    _showLayer.lineWidth = 5;
+    
     _hideLayer = [[CAShapeLayer alloc] init];
     _hideLayer.fillColor = [UIColor clearColor].CGColor;
     _hideLayer.strokeColor = [UIColor whiteColor].CGColor;
     _hideLayer.lineWidth = 8;
+
 }
 
 /**
@@ -212,6 +219,8 @@ NSInteger const Button_Font = 16;
     }
     else
     {
+        _hideLayer.path = nil;
+        _showLayer.path = nil;
         [_showLayer removeAllAnimations];
         [_hideLayer removeAllAnimations];
         [_showLayer removeFromSuperlayer];
@@ -342,9 +351,7 @@ NSInteger const Button_Font = 16;
     CGPoint p2 = CGPointMake(x+35,y-20);
     [path addLineToPoint:p2];
     //新建图层——绘制上面的圆圈和勾
-    _showLayer.fillColor = [UIColor clearColor].CGColor;
     _showLayer.strokeColor = [UIColor greenColor].CGColor;
-    _showLayer.lineWidth = 5;
     _showLayer.path = path.CGPath;
     
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:NSStringFromSelector(@selector(strokeEnd))];
@@ -395,9 +402,8 @@ NSInteger const Button_Font = 16;
     
     
     //新建图层——绘制上述路径
-    _showLayer.fillColor = [UIColor clearColor].CGColor;
     _showLayer.strokeColor = [UIColor orangeColor].CGColor;
-    _showLayer.lineWidth = 5;
+
     _showLayer.path = path.CGPath;
     
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:NSStringFromSelector(@selector(strokeEnd))];
@@ -441,9 +447,7 @@ NSInteger const Button_Font = 16;
     [path addLineToPoint:p2];
     
     //新建图层——绘制上述路径
-    _showLayer.fillColor = [UIColor clearColor].CGColor;
     _showLayer.strokeColor = [UIColor redColor].CGColor;
-    _showLayer.lineWidth = 5;
     _showLayer.path = path.CGPath;
 #warning 使用NSStringFromSelector(@selector(strokeEnd))作为KeyPath的作用，绘制动画每一次Show均重复运行
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:NSStringFromSelector(@selector(strokeEnd))];
