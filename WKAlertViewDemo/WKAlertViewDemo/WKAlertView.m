@@ -38,8 +38,8 @@ NSInteger const Button_Font = 16;
     UIButton * _OkButton;//确定按钮
     UIButton * _canleButton;//取消按钮
 
-    CAShapeLayer * _showLayer;
-    CAShapeLayer * _hideLayer;
+    CAShapeLayer * _showLayer;//显示图层
+    CAShapeLayer * _hideLayer;//隐藏图层
     
 }
 @property (nonatomic, assign) WKAlertViewStyle style;
