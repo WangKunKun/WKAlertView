@@ -22,7 +22,7 @@
     
     
     CGFloat x = self.view.center.x ;
-    CGFloat y = self.view.center.y - 240;
+    CGFloat y = self.view.center.y - 160;
     
     NSArray * textArray = @[@"成功",@"失败",@"警告"];
     
@@ -34,7 +34,7 @@
         [self.view addSubview:successButton];
         [successButton addTarget:self action:@selector(show:) forControlEvents:UIControlEventTouchUpInside];
         successButton.tag = 60 + i;
-        y += 120;
+        y += 80;
     }
     
 
@@ -66,12 +66,11 @@
             break;
     }
 #pragma mark Block
-    //为成员变量Window赋值则立即显示Window
    WKAlertView * aaa = [WKAlertView showAlertViewWithStyle:sender.tag - 59 title:title detail:detail canleButtonTitle:cancle okButtonTitle:ok callBlock:^(MyWindowClick buttonIndex) {
         //点击效果
 
     }];
-    [aaa show];
+//    [aaa show];
     
     
 #pragma mark Delegate

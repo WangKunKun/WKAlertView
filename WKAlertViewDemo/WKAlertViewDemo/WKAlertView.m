@@ -50,7 +50,18 @@ NSInteger const Button_Font = 16;
 @implementation WKAlertView
 
 
-
+/**
+ *  生成警告提示框的提示视图
+ *
+ *  @param style    警告视图样式
+ *  @param title    视图提示标题
+ *  @param detail   提示详细内容
+ *  @param canle    取消按钮的显示文本
+ *  @param ok       确定按钮的显示文本
+ *  @param callBack 点击事件回调Block
+ *
+ *  @return WkAlertView
+ */
 + (instancetype)showAlertViewWithStyle:(WKAlertViewStyle)style title:(NSString *)title detail:(NSString *)detail canleButtonTitle:(NSString *)canle okButtonTitle:(NSString *)ok callBlock:(callBack)callBack
 {
     WKAlertView * temp =  [self shared];
@@ -119,6 +130,9 @@ NSInteger const Button_Font = 16;
     [self layerInit];
 }
 
+/**
+ *  初始化图层，便于后续上色以及隐藏显示
+ */
 - (void)layerInit
 {
     _showLayer = [[CAShapeLayer alloc] init];

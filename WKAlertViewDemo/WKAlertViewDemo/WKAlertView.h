@@ -7,45 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Enum.h"
 
 /**
  *  @Author wang kun
  *
- *  点击样式
- */
-typedef NS_ENUM(NSInteger, MyWindowClick){
-    /**
-     *  @Author wang kun
-     *
-     *  点击确定按钮
-     */
-    MyWindowClickForOK = 0,
-    /**
-     *  @Author wang kun
-     *
-     *  点击取消按钮
-     */
-    MyWindowClickForCancel
-};
-
-/**
- *  @Author wang kun
+ *  点击效果
  *
- *  提示框显示样式
+ *  @param buttonIndex 样式
  */
-typedef NS_ENUM(NSInteger, WKAlertViewStyle)
-{
-
-    WKAlertViewStyleDefalut = 0,//默认样式 ——成功
-
-    WKAlertViewStyleSuccess,//成功
-
-    WKAlertViewStyleFail,//失败
-
-    WKAlertViewStyleWaring//警告
-};
-
 typedef void (^callBack)(MyWindowClick buttonIndex);
+
 
 @protocol WKAlertViewDelegate <NSObject>
 
@@ -56,7 +28,7 @@ typedef void (^callBack)(MyWindowClick buttonIndex);
 
 @interface WKAlertView : UIWindow
 
-@property (nonatomic, copy) callBack clickBlock ;//按钮点击事件的回调
+@property (nonatomic, copy) callBack clickBlock ;/// 按钮点击事件的回调
 @property (nonatomic, assign) id <WKAlertViewDelegate> WKAlertViewDelegate;
 
 + (instancetype)shared;
@@ -73,10 +45,10 @@ typedef void (^callBack)(MyWindowClick buttonIndex);
  *  @param ok       确定按钮标题
  *  @param callBack 按钮点击时间回调
  *
- *  @return 返回AlertView
+ *  @return AlertView
  */
 + (instancetype)showAlertViewWithStyle:(WKAlertViewStyle)style title:(NSString *)title detail:(NSString *)detail canleButtonTitle:(NSString *)canle okButtonTitle:(NSString *)ok callBlock:(callBack)callBack;
-//默认样式创建AlertView
+/// 默认样式创建AlertView
 + (instancetype)showAlertViewWithTitle:(NSString *)title detail:(NSString *)detail canleButtonTitle:(NSString *)canle okButtonTitle:(NSString *)ok callBlock:(callBack)callBack;
 
 + (instancetype)showAlertViewWithStyle:(WKAlertViewStyle)style title:(NSString *)title detail:(NSString *)detail canleButtonTitle:(NSString *)canle okButtonTitle:(NSString *)ok delegate:(id<WKAlertViewDelegate>)delegate;

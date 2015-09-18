@@ -6,6 +6,19 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		18C8C3D11AC92E75001A1973 /* test */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 18C8C3D41AC92E75001A1973 /* Build configuration list for PBXAggregateTarget "test" */;
+			buildPhases = (
+			);
+			dependencies = (
+			);
+			name = test;
+			productName = test;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		EA561B661AB0112900559D26 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EA561B651AB0112900559D26 /* main.m */; };
 		EA561B691AB0112900559D26 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA561B681AB0112900559D26 /* AppDelegate.m */; };
@@ -27,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		18C8C3D51AC9300E001A1973 /* Enum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Enum.h; sourceTree = "<group>"; };
 		EA561B601AB0112900559D26 /* WKAlertViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WKAlertViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA561B641AB0112900559D26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA561B651AB0112900559D26 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -88,6 +102,7 @@
 				EA561B871AB0115000559D26 /* VC.m */,
 				EA561B831AB0114100559D26 /* WKAlertView.h */,
 				EA561B841AB0114100559D26 /* WKAlertView.m */,
+				18C8C3D51AC9300E001A1973 /* Enum.h */,
 				EA561B6A1AB0112900559D26 /* Images.xcassets */,
 				EA561B6C1AB0112900559D26 /* LaunchScreen.xib */,
 				EA561B631AB0112900559D26 /* Supporting Files */,
@@ -168,11 +183,16 @@
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "王琨";
 				TargetAttributes = {
+					18C8C3D11AC92E75001A1973 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
 					EA561B5F1AB0112900559D26 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 9C34G45HNS;
 					};
 					EA561B721AB0112900559D26 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 9C34G45HNS;
 						TestTargetID = EA561B5F1AB0112900559D26;
 					};
 				};
@@ -192,6 +212,7 @@
 			targets = (
 				EA561B5F1AB0112900559D26 /* WKAlertViewDemo */,
 				EA561B721AB0112900559D26 /* WKAlertViewDemoTests */,
+				18C8C3D11AC92E75001A1973 /* test */,
 			);
 		};
 /* End PBXProject section */
@@ -257,6 +278,20 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		18C8C3D21AC92E75001A1973 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		18C8C3D31AC92E75001A1973 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		EA561B7B1AB0112900559D26 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -361,6 +396,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -372,6 +409,7 @@
 				INFOPLIST_FILE = WKAlertViewDemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WKAlertViewDemo.app/WKAlertViewDemo";
 			};
 			name = Debug;
@@ -380,6 +418,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -387,6 +427,7 @@
 				INFOPLIST_FILE = WKAlertViewDemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WKAlertViewDemo.app/WKAlertViewDemo";
 			};
 			name = Release;
@@ -394,6 +435,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		18C8C3D41AC92E75001A1973 /* Build configuration list for PBXAggregateTarget "test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18C8C3D21AC92E75001A1973 /* Debug */,
+				18C8C3D31AC92E75001A1973 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		EA561B5B1AB0112900559D26 /* Build configuration list for PBXProject "WKAlertViewDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
