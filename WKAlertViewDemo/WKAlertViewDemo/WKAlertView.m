@@ -408,6 +408,8 @@ NSInteger const Button_Font = 16;
 - (void)isShowLayer:(BOOL)show
 {
     
+    //strokeEnd
+    //通过对from，to赋值，可让贝塞尔动画从终点至起点，或起点至终点
     NSNumber * from = show ? @0 : @1;
     NSNumber * to = show ? @1 : @0;
     
