@@ -26,7 +26,7 @@
 		EA561B6E1AB0112900559D26 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA561B6C1AB0112900559D26 /* LaunchScreen.xib */; };
 		EA561B7A1AB0112900559D26 /* WKAlertViewDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EA561B791AB0112900559D26 /* WKAlertViewDemoTests.m */; };
 		EA561B851AB0114100559D26 /* WKAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA561B841AB0114100559D26 /* WKAlertView.m */; };
-		EA561B881AB0115000559D26 /* VC.m in Sources */ = {isa = PBXBuildFile; fileRef = EA561B871AB0115000559D26 /* VC.m */; };
+		EA561B881AB0115000559D26 /* WKAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA561B871AB0115000559D26 /* WKAlertViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,8 +53,8 @@
 		EA561B791AB0112900559D26 /* WKAlertViewDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WKAlertViewDemoTests.m; sourceTree = "<group>"; };
 		EA561B831AB0114100559D26 /* WKAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKAlertView.h; sourceTree = "<group>"; };
 		EA561B841AB0114100559D26 /* WKAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKAlertView.m; sourceTree = "<group>"; };
-		EA561B861AB0115000559D26 /* VC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VC.h; sourceTree = "<group>"; };
-		EA561B871AB0115000559D26 /* VC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VC.m; sourceTree = "<group>"; };
+		EA561B861AB0115000559D26 /* WKAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKAlertViewController.h; sourceTree = "<group>"; };
+		EA561B871AB0115000559D26 /* WKAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKAlertViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,8 +98,8 @@
 			children = (
 				EA561B671AB0112900559D26 /* AppDelegate.h */,
 				EA561B681AB0112900559D26 /* AppDelegate.m */,
-				EA561B861AB0115000559D26 /* VC.h */,
-				EA561B871AB0115000559D26 /* VC.m */,
+				EA561B861AB0115000559D26 /* WKAlertViewController.h */,
+				EA561B871AB0115000559D26 /* WKAlertViewController.m */,
 				EA561B831AB0114100559D26 /* WKAlertView.h */,
 				EA561B841AB0114100559D26 /* WKAlertView.m */,
 				18C8C3D51AC9300E001A1973 /* Enum.h */,
@@ -241,7 +241,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA561B881AB0115000559D26 /* VC.m in Sources */,
+				EA561B881AB0115000559D26 /* WKAlertViewController.m in Sources */,
 				EA561B851AB0114100559D26 /* WKAlertView.m in Sources */,
 				EA561B691AB0112900559D26 /* AppDelegate.m in Sources */,
 				EA561B661AB0112900559D26 /* main.m in Sources */,
@@ -442,6 +442,7 @@
 				18C8C3D31AC92E75001A1973 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EA561B5B1AB0112900559D26 /* Build configuration list for PBXProject "WKAlertViewDemo" */ = {
 			isa = XCConfigurationList;

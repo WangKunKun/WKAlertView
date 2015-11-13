@@ -6,15 +6,15 @@
 //  Copyright (c) 2015年 王琨. All rights reserved.
 //
 
-#import "VC.h"
+#import "WKAlertViewController.h"
 #import "WKAlertView.h"
 
-@interface VC ()
+@interface WKAlertViewController ()
 <WKAlertViewDelegate>
 
 @end
 
-@implementation VC
+@implementation WKAlertViewController
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -66,11 +66,11 @@
             break;
     }
 #pragma mark Block
-   WKAlertView * aaa = [WKAlertView showAlertViewWithStyle:sender.tag - 59 title:title detail:detail canleButtonTitle:cancle okButtonTitle:ok callBlock:^(MyWindowClick buttonIndex) {
+   WKAlertView * alertView = [WKAlertView showAlertViewWithStyle:sender.tag - 59 title:title detail:detail canleButtonTitle:cancle okButtonTitle:ok callBlock:^(MyWindowClick buttonIndex) {
         //点击效果
 
     }];
-    [aaa show];
+    [alertView show];
     
     
 #pragma mark Delegate

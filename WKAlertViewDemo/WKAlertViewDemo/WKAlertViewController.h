@@ -7,6 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface VC : UIViewController
+@interface WKAlertViewController : UIViewController
 
 @end

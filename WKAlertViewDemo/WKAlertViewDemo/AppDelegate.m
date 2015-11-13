@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "VC.h"
+#import "WKAlertViewController.h"
 
 
 @interface AppDelegate ()
@@ -21,9 +21,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
-    self.window.rootViewController = [VC new];
-
-    NSLog(@"%@",self.window);
+    self.window.rootViewController = [WKAlertViewController new];
     
     
     [self.window makeKeyAndVisible];
