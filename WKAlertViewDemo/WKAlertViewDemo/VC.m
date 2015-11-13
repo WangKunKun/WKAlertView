@@ -70,7 +70,7 @@
         //点击效果
 
     }];
-//    [aaa show];
+    [aaa show];
     
     
 #pragma mark Delegate
