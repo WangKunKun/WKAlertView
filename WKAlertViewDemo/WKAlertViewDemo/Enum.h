@@ -28,6 +28,14 @@ typedef NS_ENUM(NSInteger, MyWindowClick){
 };
 
 
+typedef NS_ENUM(NSInteger, WKAlertViewNoticStyle)
+{
+    WKAlertViewNoticStyleClassic ,//经典提示 默认
+    WKAlertViewNoticStyleFace//小人脸提示
+};
+
+
+
 /**
  *  @Author wang kun
  *

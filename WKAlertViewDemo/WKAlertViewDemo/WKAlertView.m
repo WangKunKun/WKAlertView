@@ -12,6 +12,8 @@
 //  3.优化代码结构，添加program mark
 //  4.修改一些类名、变量名
 
+//添加小人脸提示样式
+
 #import "WKAlertView.h"
 //按钮颜色
 #define OKBUTTON_BGCOLOR [UIColor colorWithRed:158/255.0 green:214/255.0 blue:243/255.0 alpha:1]
@@ -24,6 +26,11 @@
 
 //window的显示等级
 #define SHOW_LEVEL 1000
+
+//画笔宽度
+#define FACELINEWIDTH     2
+#define CLASSICLLINEWIDTH 5
+
 NSUInteger const Button_Size_Width = 80;
 NSUInteger const Button_Size_Height = 30;
 
@@ -53,6 +60,30 @@ NSInteger const Button_Font = 16;
 @implementation WKAlertView
 
 
+
++ (instancetype)showAlertViewWithStyle:(WKAlertViewStyle)style
+                            noticStyle:(WKAlertViewNoticStyle)noticStyle
+                                 title:(NSString *)title
+                                detail:(NSString *)detail
+                      canleButtonTitle:(NSString *)canle
+                         okButtonTitle:(NSString *)ok
+                             callBlock:(callBack)callBack
+{
+    WKAlertView * temp =  [self shared];
+    temp.noticStyle = noticStyle;
+    temp.hidden = YES;
+    temp.style = style;
+    temp.windowLevel = SHOW_LEVEL;
+    [temp isShowLayer:YES];
+    [temp addButtonTitleWithCancle:canle OK:ok];
+    [temp addTitle:title detail:detail];
+    [temp isShowControls:YES];
+    [temp setClickBlock:nil];//释放掉之前的Block
+    [temp setClickBlock:callBack];
+    
+    return  [self shared];
+}
+
 /**
  *  生成警告提示框的提示视图
  *
@@ -65,28 +96,44 @@ NSInteger const Button_Font = 16;
  *
  *  @return WkAlertView
  */
-+ (instancetype)showAlertViewWithStyle:(WKAlertViewStyle)style title:(NSString *)title detail:(NSString *)detail canleButtonTitle:(NSString *)canle okButtonTitle:(NSString *)ok callBlock:(callBack)callBack
++ (instancetype)showAlertViewWithStyle:(WKAlertViewStyle)style
+                                 title:(NSString *)title
+                                detail:(NSString *)detail
+                      canleButtonTitle:(NSString *)canle
+                         okButtonTitle:(NSString *)ok
+                             callBlock:(callBack)callBack
 {
-    WKAlertView * temp =  [self shared];
-    temp.hidden = YES;
-    temp.style = style;
-    temp.windowLevel = SHOW_LEVEL;
-    [temp isShowLayer:YES];
-    [temp addButtonTitleWithCancle:canle OK:ok];
-    [temp addTitle:title detail:detail];
-    [temp isShowControls:YES];
-    [temp setClickBlock:nil];//释放掉之前的Block
-    [temp setClickBlock:callBack];
-
-    return  [self shared];
+//    WKAlertView * temp =  [self shared];
+//    temp.hidden = YES;
+//    temp.style = style;
+//    temp.windowLevel = SHOW_LEVEL;
+//    [temp isShowLayer:YES];
+//    [temp addButtonTitleWithCancle:canle OK:ok];
+//    [temp addTitle:title detail:detail];
+//    [temp isShowControls:YES];
+//    [temp setClickBlock:nil];//释放掉之前的Block
+//    [temp setClickBlock:callBack];
+//    
+//    return  [self shared];
+    
+    return [self showAlertViewWithStyle:style noticStyle:WKAlertViewNoticStyleClassic title:title detail:detail canleButtonTitle:canle okButtonTitle:ok callBlock:callBack];
 }
 
-+ (instancetype)showAlertViewWithTitle:(NSString *)title detail:(NSString *)detail canleButtonTitle:(NSString *)canle okButtonTitle:(NSString *)ok callBlock:(callBack)callBack
++ (instancetype)showAlertViewWithTitle:(NSString *)title
+                                detail:(NSString *)detail
+                      canleButtonTitle:(NSString *)canle
+                         okButtonTitle:(NSString *)ok
+                             callBlock:(callBack)callBack
 {
   return [self showAlertViewWithStyle:WKAlertViewStyleSuccess title:title detail:detail canleButtonTitle:canle okButtonTitle:ok callBlock:callBack];
 }
 
-+ (instancetype)showAlertViewWithStyle:(WKAlertViewStyle)style title:(NSString *)title detail:(NSString *)detail canleButtonTitle:(NSString *)canle okButtonTitle:(NSString *)ok delegate:(id<WKAlertViewDelegate>)delegate
++ (instancetype)showAlertViewWithStyle:(WKAlertViewStyle)style
+                                 title:(NSString *)title
+                                detail:(NSString *)detail
+                      canleButtonTitle:(NSString *)canle
+                         okButtonTitle:(NSString *)ok
+                              delegate:(id<WKAlertViewDelegate>)delegate
 {
     WKAlertView * temp = [self showAlertViewWithStyle:style title:title detail:detail canleButtonTitle:canle okButtonTitle:ok callBlock:nil];
     temp.WKAlertViewDelegate = delegate;
@@ -118,6 +165,18 @@ NSInteger const Button_Font = 16;
     
     return self;
 }
+
+/**
+ *  接受到提示样式时，再生成提示图
+ *
+ *  @param noticStyle 提示样式
+ */
+- (void)setNoticStyle:(WKAlertViewNoticStyle)noticStyle
+{
+    _noticStyle = noticStyle;
+    [self layerInit];
+}
+
 #pragma mark 界面初始化
 /**
  *  @author by wangkun, 15-03-11 17:03:18
@@ -128,7 +187,6 @@ NSInteger const Button_Font = 16;
 {
     [self logoInit];
     [self controlsInit];
-    [self layerInit];
 }
 
 /**
@@ -136,20 +194,136 @@ NSInteger const Button_Font = 16;
  */
 - (void)layerInit
 {
-    [self initPathForRightShapeLayer];
-    [self initPathForWrongShapeLayer];
-    [self initPathForWaringShapeLayer];
+    
+    [_showLayerArray removeAllObjects];
+    switch (self.noticStyle) {
+
+        case WKAlertViewNoticStyleFace:
+        {
+            [self initPathForRightShapeLayerWithFace];
+            [self initPathForWrongShapeLayerWithFace];
+            [self initPathForWaringShapeLayerWithFace];
+            break;
+        }
+        default:
+        case WKAlertViewNoticStyleClassic: {
+            [self initPathForRightShapeLayer];
+            [self initPathForWrongShapeLayer];
+            [self initPathForWaringShapeLayer];
+            break;
+        }
+    }
+
 }
 
 
 #warning 勾画路径，可自行添加路径样式
-- (void)initPathForRightShapeLayer
+#pragma mark 通用
+
+- (CAShapeLayer *)layerConfig
 {
-    
     CAShapeLayer * showLayer = [CAShapeLayer new];
     showLayer.fillColor = [UIColor clearColor].CGColor;
     showLayer.strokeColor = [UIColor clearColor].CGColor;
-    showLayer.lineWidth = 5;
+    showLayer.lineWidth = _noticStyle == WKAlertViewNoticStyleClassic ? CLASSICLLINEWIDTH : FACELINEWIDTH;
+    return showLayer;
+}
+
+#pragma mark 小人脸提示
+- (UIBezierPath *)FacePath
+{
+    CGPoint pathCenter = CGPointMake(_logoView.frame.size.width/2, _logoView.frame.size.height/2 - 50);
+    UIBezierPath * path = [UIBezierPath bezierPathWithArcCenter:pathCenter radius:Logo_Size startAngle:0 endAngle:M_PI*2 clockwise:YES];
+    
+    path.lineCapStyle = kCGLineCapRound;
+    path.lineJoinStyle = kCGLineJoinRound;
+    
+    CGFloat x = _logoView.frame.size.width/2 - 20;
+    CGFloat y = 45;
+    
+    [path moveToPoint:CGPointMake(x, y)];
+    
+    [path addArcWithCenter:CGPointMake(x, y) radius:2 startAngle:0 endAngle:M_PI*2 clockwise:YES];
+    
+    x = _logoView.frame.size.width/2 + 20;
+    [path moveToPoint:CGPointMake(x, y)];
+    [path addArcWithCenter:CGPointMake(x, y) radius:2 startAngle:0 endAngle:M_PI*2 clockwise:YES];
+    
+    return path;
+
+}
+
+- (void)initPathForRightShapeLayerWithFace
+{
+
+    CAShapeLayer * showLayer = [self layerConfig];
+    UIBezierPath * path = [self FacePath];
+    
+    CGFloat x = _logoView.frame.size.width/2;
+    CGFloat y = 60;
+    
+    UIBezierPath * path1 = [UIBezierPath bezierPathWithArcCenter:CGPointMake(x, y) radius:20 startAngle:M_PI*2 endAngle:M_PI clockwise:YES];
+    
+    [path appendPath:path1];
+
+    //新建图层——绘制上面的圆圈和勾
+    showLayer.strokeColor = [UIColor greenColor].CGColor;
+    showLayer.path = path.CGPath;
+    
+    [_showLayerArray addObject:showLayer];
+
+}
+
+
+- (void)initPathForWrongShapeLayerWithFace
+{
+    CAShapeLayer * showLayer = [self layerConfig];
+
+    
+    UIBezierPath * path = [self FacePath];
+    
+    
+    CGFloat x = _logoView.frame.size.width/2;
+    CGFloat y = 90;
+    
+    UIBezierPath * path1 = [UIBezierPath bezierPathWithArcCenter:CGPointMake(x, y) radius:20 startAngle:M_PI endAngle:M_PI * 2 clockwise:YES];
+    
+    [path appendPath:path1];
+    
+    //新建图层——绘制上面的圆圈和勾
+    showLayer.strokeColor = [UIColor redColor].CGColor;
+    showLayer.path = path.CGPath;
+    
+    [_showLayerArray addObject:showLayer];
+    
+}
+
+- (void)initPathForWaringShapeLayerWithFace
+{
+    CAShapeLayer * showLayer = [self layerConfig];
+
+    
+    UIBezierPath *path = [self FacePath];
+    
+    
+    [path moveToPoint:CGPointMake(_logoView.frame.size.width/2 - 10, 45 + 35)];
+    [path addLineToPoint:CGPointMake(_logoView.frame.size.width/2 + 10, 45 + 35)];
+    
+    
+    
+    //新建图层——绘制上面的圆圈和勾
+    showLayer.strokeColor = [UIColor orangeColor].CGColor;
+    showLayer.path = path.CGPath;
+    
+    [_showLayerArray addObject:showLayer];
+}
+
+#pragma mark 经典提示
+- (void)initPathForRightShapeLayer
+{
+    
+    CAShapeLayer * showLayer = [self layerConfig];
+
     
     CGPoint pathCenter = CGPointMake(_logoView.frame.size.width/2, _logoView.frame.size.height/2 - 50);
     UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:pathCenter radius:Logo_Size startAngle:0 endAngle:M_PI*2 clockwise:YES];
@@ -178,10 +352,8 @@ NSInteger const Button_Font = 16;
 - (void)initPathForWrongShapeLayer
 {
     
-    CAShapeLayer * showLayer = [CAShapeLayer new];
-    showLayer.fillColor = [UIColor clearColor].CGColor;
-    showLayer.strokeColor = [UIColor clearColor].CGColor;
-    showLayer.lineWidth = 5;
+    CAShapeLayer * showLayer = [self layerConfig];
+
     
     CGFloat x = _logoView.frame.size.width / 2 - Logo_Size;
     CGFloat y = 15;
@@ -210,10 +382,8 @@ NSInteger const Button_Font = 16;
 
 - (void)initPathForWaringShapeLayer
 {
-    CAShapeLayer * showLayer = [CAShapeLayer new];
-    showLayer.fillColor = [UIColor clearColor].CGColor;
-    showLayer.strokeColor = [UIColor clearColor].CGColor;
-    showLayer.lineWidth = 5;
+    CAShapeLayer * showLayer = [self layerConfig];
+
     
     UIBezierPath *path = [UIBezierPath bezierPath];
     path.lineCapStyle = kCGLineCapRound;

@@ -11,7 +11,7 @@
 
 @interface WKAlertViewController ()
 <WKAlertViewDelegate>
-
+@property (nonatomic, strong) UISegmentedControl * segmentedControl;
 @end
 
 @implementation WKAlertViewController
@@ -20,6 +20,12 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
+    NSArray * noticStyleArray = @[@"经典",@"小人脸"];
+    _segmentedControl = [[UISegmentedControl alloc] initWithItems:noticStyleArray];
+    _segmentedControl.center = CGPointMake(self.view.center.x , 60);
+    _segmentedControl.bounds = CGRectMake(0, 0, 200, 40);
+    [self.view addSubview:_segmentedControl];
+    _segmentedControl.selectedSegmentIndex = 0;
     
     CGFloat x = self.view.center.x ;
     CGFloat y = self.view.center.y - 160;
@@ -36,10 +42,9 @@
         successButton.tag = 60 + i;
         y += 80;
     }
-    
-
-
 }
+
+
 
 - (void)show:(UIButton *)sender
 {
@@ -66,7 +71,7 @@
             break;
     }
 #pragma mark Block
-   WKAlertView * alertView = [WKAlertView showAlertViewWithStyle:sender.tag - 59 title:title detail:detail canleButtonTitle:cancle okButtonTitle:ok callBlock:^(MyWindowClick buttonIndex) {
+    WKAlertView * alertView = [WKAlertView showAlertViewWithStyle:sender.tag - 59 noticStyle:_segmentedControl.selectedSegmentIndex title:title detail:detail canleButtonTitle:cancle okButtonTitle:ok callBlock:^(MyWindowClick buttonIndex) {
         //点击效果
 
     }];
