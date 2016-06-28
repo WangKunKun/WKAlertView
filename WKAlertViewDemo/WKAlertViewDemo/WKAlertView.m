@@ -29,19 +29,20 @@
 
 //画笔宽度
 #define FACELINEWIDTH     2
-#define CLASSICLLINEWIDTH 5
+#define CLASSICLLINEWIDTH 3
 
-NSUInteger const Button_Size_Width = 80;
-NSUInteger const Button_Size_Height = 30;
+NSUInteger const Button_Size_Width = 70;
+NSUInteger const Button_Size_Height = 25;
 
-NSInteger const Title_Font = 18;
-NSInteger const Detial_Font = 16;
+
 
 //Logo半径（画布）
-NSInteger const Logo_Size = 40;
+NSInteger const Logo_View_Size = 150;
+NSInteger const Logo_Size = Logo_View_Size /6.0;
 
-NSInteger const Button_Font = 16;
-
+NSInteger const Button_Font = 14;
+NSInteger const Title_Font = 16;
+NSInteger const Detial_Font = 14;
 @interface WKAlertView ()
 {
     UIView * _logoView;//画布
@@ -73,7 +74,6 @@ NSInteger const Button_Font = 16;
     temp.noticStyle = noticStyle;
     temp.hidden = YES;
     temp.style = style;
-    temp.windowLevel = SHOW_LEVEL;
     [temp isShowLayer:YES];
     [temp addButtonTitleWithCancle:canle OK:ok];
     [temp addTitle:title detail:detail];
@@ -103,19 +103,6 @@ NSInteger const Button_Font = 16;
                          okButtonTitle:(NSString *)ok
                              callBlock:(callBack)callBack
 {
-//    WKAlertView * temp =  [self shared];
-//    temp.hidden = YES;
-//    temp.style = style;
-//    temp.windowLevel = SHOW_LEVEL;
-//    [temp isShowLayer:YES];
-//    [temp addButtonTitleWithCancle:canle OK:ok];
-//    [temp addTitle:title detail:detail];
-//    [temp isShowControls:YES];
-//    [temp setClickBlock:nil];//释放掉之前的Block
-//    [temp setClickBlock:callBack];
-//    
-//    return  [self shared];
-    
     return [self showAlertViewWithStyle:style noticStyle:WKAlertViewNoticStyleClassic title:title detail:detail canleButtonTitle:canle okButtonTitle:ok callBlock:callBack];
 }
 
@@ -158,7 +145,6 @@ NSInteger const Button_Font = 16;
         self.alpha = 1;
         [self setBackgroundColor:[UIColor clearColor]];
         self.hidden = NO;//不隐藏
-        self.windowLevel = 100;
         _showLayerArray = [NSMutableArray new];
         [self setInterFace];
     }
@@ -325,22 +311,23 @@ NSInteger const Button_Font = 16;
     CAShapeLayer * showLayer = [self layerConfig];
 
     
-    CGPoint pathCenter = CGPointMake(_logoView.frame.size.width/2, _logoView.frame.size.height/2 - 50);
+    CGPoint pathCenter = CGPointMake(_logoView.frame.size.width/2, _logoView.frame.size.height/4);
     UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:pathCenter radius:Logo_Size startAngle:0 endAngle:M_PI*2 clockwise:YES];
     
     path.lineCapStyle = kCGLineCapRound;
     path.lineJoinStyle = kCGLineJoinRound;
     
+    pathCenter.x -= 3;
     
-    CGFloat x = _logoView.frame.size.width/2.5 + 5;
-    CGFloat y = _logoView.frame.size.height/2 - 45;
+    CGFloat x = pathCenter.x * 0.88;
+    CGFloat y = pathCenter.y * 1.13;
     //勾的起点
     [path moveToPoint:CGPointMake(x, y)];
     //勾的最底端
-    CGPoint p1 = CGPointMake(x+10, y+ 10);
+    CGPoint p1 = CGPointMake(pathCenter.x, pathCenter.y * 1.3);
     [path addLineToPoint:p1];
     //勾的最上端
-    CGPoint p2 = CGPointMake(x+35,y-20);
+    CGPoint p2 = CGPointMake(pathCenter.x * 1.2,pathCenter.y * 0.8);
     [path addLineToPoint:p2];
     //新建图层——绘制上面的圆圈和勾
     showLayer.strokeColor = [UIColor greenColor].CGColor;
@@ -430,16 +417,16 @@ NSInteger const Button_Font = 16;
     CGFloat height = _logoView.frame.size.height;
     CGFloat width = _logoView.frame.size.width;
     
-    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(x ,y + height / 2, width, Title_Font + 5)];
+    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(x ,y + height / 2, width, Title_Font)];
     [_titleLabel setFont:[UIFont systemFontOfSize:Title_Font]];
     [_titleLabel setTextAlignment:NSTextAlignmentCenter];
 
-    _detailLabel  = [[UILabel alloc] initWithFrame:CGRectMake(x ,y + height / 2 + (Title_Font + 10), width, Detial_Font + 5)];
+    _detailLabel  = [[UILabel alloc] initWithFrame:CGRectMake(x ,_titleLabel.bottomS + 5, width, Detial_Font )];
     _detailLabel.textColor = [UIColor grayColor];
     [_detailLabel setFont:[UIFont systemFontOfSize:Detial_Font]];
     [_detailLabel setTextAlignment:NSTextAlignmentCenter];
 
-    CGFloat centerY = _detailLabel.center.y + 40;
+    CGFloat centerY = _detailLabel.center.y + 20;
     
     _OkButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _OkButton.layer.cornerRadius = 5;
@@ -486,8 +473,8 @@ NSInteger const Button_Font = 16;
 {
         //新建画布
         _logoView                     = [UIView new];
-        _logoView.center              = CGPointMake(self.center.x, self.center.y - 40);
-        _logoView.bounds              = CGRectMake(0, 0, 320 / 1.5, 320 / 1.5);
+        _logoView.center              = self.center;
+        _logoView.bounds              = CGRectMake(0, 0, Logo_View_Size, Logo_View_Size);
         _logoView.backgroundColor     = [UIColor whiteColor];
         _logoView.layer.cornerRadius  = 10;
         _logoView.layer.shadowColor   = [UIColor blackColor].CGColor;
@@ -511,7 +498,7 @@ NSInteger const Button_Font = 16;
         flag = YES;
     }
     
-    CGFloat centerY = _detailLabel.center.y + 40;
+    CGFloat centerY = _detailLabel.bottomS + Button_Size_Height / 2.0 + 5;
 
     if (flag) {
         _OkButton.center = CGPointMake(_detailLabel.center.x, centerY);
@@ -546,22 +533,21 @@ NSInteger const Button_Font = 16;
 }
 
 
-#pragma mark 动画控制
 - (void)show
-{
-#warning 注册可以响应键盘事件
-    [[WKAlertView shared] makeKeyWindow];
-    [WKAlertView shared].hidden = NO;
+{    
+    [KEYWINDOW addSubview:self];
+    self.hidden = NO;
 }
 
 - (void)hide
 {
     [self isShowLayer:NO];
     [self isShowControls:NO];
-#warning 取消注册为keyWindow
-    [self resignKeyWindow];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.55 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self removeFromSuperview];
+        self.hidden = YES;
+    });
 }
-
 - (void)isShowControls:(BOOL)show
 {
     NSUInteger alpha = show ? 1 : 0;

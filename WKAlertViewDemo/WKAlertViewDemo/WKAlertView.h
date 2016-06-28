@@ -27,7 +27,7 @@ typedef void (^callBack)(MyWindowClick buttonIndex);
 @end
 
 
-@interface WKAlertView : UIWindow
+@interface WKAlertView : UIView
 
 @property (nonatomic, copy) callBack clickBlock ;/// 按钮点击事件的回调
 @property (nonatomic, assign) id <WKAlertViewDelegate> WKAlertViewDelegate;

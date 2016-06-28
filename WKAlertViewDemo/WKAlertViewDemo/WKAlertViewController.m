@@ -71,7 +71,7 @@
             break;
     }
 #pragma mark Block
-    WKAlertView * alertView = [WKAlertView showAlertViewWithStyle:sender.tag - 59 noticStyle:_segmentedControl.selectedSegmentIndex title:title detail:detail canleButtonTitle:cancle okButtonTitle:ok callBlock:^(MyWindowClick buttonIndex) {
+    WKAlertView * alertView = [WKAlertView showAlertViewWithStyle:sender.tag - 59 noticStyle:_segmentedControl.selectedSegmentIndex title:title detail:detail canleButtonTitle:nil okButtonTitle:ok callBlock:^(MyWindowClick buttonIndex) {
         //点击效果
 
     }];

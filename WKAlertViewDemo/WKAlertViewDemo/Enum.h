@@ -9,6 +9,8 @@
 #ifndef WKAlertViewDemo_Enum_h
 #define WKAlertViewDemo_Enum_h
 
+#define KEYWINDOW [UIApplication sharedApplication].keyWindow
+#import "UIViewExt.h"
 /**
  *  @Author wang kun
  *

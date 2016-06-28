@@ -20,6 +20,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		43F1BE311D227C1100DD60C6 /* UIViewExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 43F1BE301D227C1100DD60C6 /* UIViewExt.m */; };
 		EA561B661AB0112900559D26 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EA561B651AB0112900559D26 /* main.m */; };
 		EA561B691AB0112900559D26 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA561B681AB0112900559D26 /* AppDelegate.m */; };
 		EA561B6B1AB0112900559D26 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA561B6A1AB0112900559D26 /* Images.xcassets */; };
@@ -41,6 +42,8 @@
 
 /* Begin PBXFileReference section */
 		18C8C3D51AC9300E001A1973 /* Enum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Enum.h; sourceTree = "<group>"; };
+		43F1BE2F1D227C1100DD60C6 /* UIViewExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIViewExt.h; sourceTree = "<group>"; };
+		43F1BE301D227C1100DD60C6 /* UIViewExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIViewExt.m; sourceTree = "<group>"; };
 		EA561B601AB0112900559D26 /* WKAlertViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WKAlertViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA561B641AB0112900559D26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA561B651AB0112900559D26 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -96,6 +99,8 @@
 		EA561B621AB0112900559D26 /* WKAlertViewDemo */ = {
 			isa = PBXGroup;
 			children = (
+				43F1BE2F1D227C1100DD60C6 /* UIViewExt.h */,
+				43F1BE301D227C1100DD60C6 /* UIViewExt.m */,
 				EA561B671AB0112900559D26 /* AppDelegate.h */,
 				EA561B681AB0112900559D26 /* AppDelegate.m */,
 				EA561B861AB0115000559D26 /* WKAlertViewController.h */,
@@ -243,6 +248,7 @@
 			files = (
 				EA561B881AB0115000559D26 /* WKAlertViewController.m in Sources */,
 				EA561B851AB0114100559D26 /* WKAlertView.m in Sources */,
+				43F1BE311D227C1100DD60C6 /* UIViewExt.m in Sources */,
 				EA561B691AB0112900559D26 /* AppDelegate.m in Sources */,
 				EA561B661AB0112900559D26 /* main.m in Sources */,
 			);
