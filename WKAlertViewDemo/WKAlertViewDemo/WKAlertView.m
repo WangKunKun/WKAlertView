@@ -31,18 +31,23 @@
 #define FACELINEWIDTH     2
 #define CLASSICLLINEWIDTH 3
 
-NSUInteger const Button_Size_Width = 70;
-NSUInteger const Button_Size_Height = 25;
+
 
 
 
 //Logo半径（画布）
-NSInteger const Logo_View_Size = 150;
+NSInteger const Logo_View_Size = 100;
+
+
 NSInteger const Logo_Size = Logo_View_Size /6.0;
 
-NSInteger const Button_Font = 14;
-NSInteger const Title_Font = 16;
-NSInteger const Detial_Font = 14;
+NSInteger const Button_Font = Logo_View_Size / 11;
+NSInteger const Title_Font = Logo_View_Size / 10;
+NSInteger const Detial_Font = Button_Font;
+
+NSUInteger const Button_Size_Width = Logo_View_Size / 2.0;
+NSUInteger const Button_Size_Height = Button_Size_Width / 3.0;
+
 @interface WKAlertView ()
 {
     UIView * _logoView;//画布
@@ -218,22 +223,22 @@ NSInteger const Detial_Font = 14;
 #pragma mark 小人脸提示
 - (UIBezierPath *)FacePath
 {
-    CGPoint pathCenter = CGPointMake(_logoView.frame.size.width/2, _logoView.frame.size.height/2 - 50);
+    CGPoint pathCenter = CGPointMake(_logoView.frame.size.width/2, _logoView.frame.size.height/4);
     UIBezierPath * path = [UIBezierPath bezierPathWithArcCenter:pathCenter radius:Logo_Size startAngle:0 endAngle:M_PI*2 clockwise:YES];
     
     path.lineCapStyle = kCGLineCapRound;
     path.lineJoinStyle = kCGLineJoinRound;
     
-    CGFloat x = _logoView.frame.size.width/2 - 20;
-    CGFloat y = 45;
+    CGFloat x = pathCenter.x  * 0.8;
+    CGFloat y = pathCenter.y  * 0.8;
     
     [path moveToPoint:CGPointMake(x, y)];
     
-    [path addArcWithCenter:CGPointMake(x, y) radius:2 startAngle:0 endAngle:M_PI*2 clockwise:YES];
+    [path addArcWithCenter:CGPointMake(x, y) radius:FACELINEWIDTH / 2.0 startAngle:0 endAngle:M_PI*2 clockwise:YES];
     
-    x = _logoView.frame.size.width/2 + 20;
+    x = pathCenter.x  * 1.2;
     [path moveToPoint:CGPointMake(x, y)];
-    [path addArcWithCenter:CGPointMake(x, y) radius:2 startAngle:0 endAngle:M_PI*2 clockwise:YES];
+    [path addArcWithCenter:CGPointMake(x, y) radius:FACELINEWIDTH / 2.0 startAngle:0 endAngle:M_PI*2 clockwise:YES];
     
     return path;
 
@@ -245,10 +250,13 @@ NSInteger const Detial_Font = 14;
     CAShapeLayer * showLayer = [self layerConfig];
     UIBezierPath * path = [self FacePath];
     
-    CGFloat x = _logoView.frame.size.width/2;
-    CGFloat y = 60;
+    CGPoint pathCenter = CGPointMake(_logoView.frame.size.width/2, _logoView.frame.size.height/4);
+
     
-    UIBezierPath * path1 = [UIBezierPath bezierPathWithArcCenter:CGPointMake(x, y) radius:20 startAngle:M_PI*2 endAngle:M_PI clockwise:YES];
+    CGFloat x = pathCenter.x  ;
+    CGFloat y = pathCenter.y * 1.05 ;
+    
+    UIBezierPath * path1 = [UIBezierPath bezierPathWithArcCenter:CGPointMake(x, y) radius:Logo_Size/2.0 startAngle:M_PI*2 endAngle:M_PI clockwise:YES];
     
     [path appendPath:path1];
 
@@ -269,10 +277,13 @@ NSInteger const Detial_Font = 14;
     UIBezierPath * path = [self FacePath];
     
     
-    CGFloat x = _logoView.frame.size.width/2;
-    CGFloat y = 90;
+    CGPoint pathCenter = CGPointMake(_logoView.frame.size.width/2, _logoView.frame.size.height/4);
     
-    UIBezierPath * path1 = [UIBezierPath bezierPathWithArcCenter:CGPointMake(x, y) radius:20 startAngle:M_PI endAngle:M_PI * 2 clockwise:YES];
+    
+    CGFloat x = pathCenter.x  ;
+    CGFloat y = pathCenter.y * 1.5 ;
+    
+    UIBezierPath * path1 = [UIBezierPath bezierPathWithArcCenter:CGPointMake(x, y) radius:Logo_Size/2.0 startAngle:M_PI endAngle:M_PI * 2 clockwise:YES];
     
     [path appendPath:path1];
     
@@ -291,9 +302,14 @@ NSInteger const Detial_Font = 14;
     
     UIBezierPath *path = [self FacePath];
     
+    CGPoint pathCenter = CGPointMake(_logoView.frame.size.width/2, _logoView.frame.size.height/4);
     
-    [path moveToPoint:CGPointMake(_logoView.frame.size.width/2 - 10, 45 + 35)];
-    [path addLineToPoint:CGPointMake(_logoView.frame.size.width/2 + 10, 45 + 35)];
+    
+    CGFloat x = pathCenter.x * 0.9 ;
+    CGFloat y = pathCenter.y * 1.4 ;
+    
+    [path moveToPoint:CGPointMake(x, y)];
+    [path addLineToPoint:CGPointMake(x*1.2, y)];
     
     
     
@@ -343,14 +359,14 @@ NSInteger const Detial_Font = 14;
 
     
     CGFloat x = _logoView.frame.size.width / 2 - Logo_Size;
-    CGFloat y = 15;
+    CGFloat y = Logo_Size / 2.0;
     
     //圆角矩形
     UIBezierPath * path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(x, y, Logo_Size * 2, Logo_Size * 2) cornerRadius:5];
     path.lineCapStyle = kCGLineCapRound;
     path.lineJoinStyle = kCGLineJoinRound;
     
-    CGFloat space = 20;
+    CGFloat space = Logo_Size / 2;
     //斜线1
     [path moveToPoint:CGPointMake(x + space, y + space)];
     CGPoint p1 = CGPointMake(x + Logo_Size * 2 - space, y + Logo_Size * 2 - space);
@@ -378,26 +394,26 @@ NSInteger const Detial_Font = 14;
     
     //绘制三角形
     CGFloat x = _logoView.frame.size.width/2;
-    CGFloat y = 15;
+    CGFloat y = Logo_Size / 2.0;
     //三角形起点（上方）
     [path moveToPoint:CGPointMake(x, y)];
     //左边
-    CGPoint p1 = CGPointMake(x - 45, y + 80);
+    CGPoint p1 = CGPointMake(x - Logo_Size , x * 0.8);
     [path addLineToPoint:p1];
     //右边
-    CGPoint p2 = CGPointMake(x + 45,y + 80);
+    CGPoint p2 = CGPointMake(x + Logo_Size , x * 0.8);
     [path addLineToPoint:p2];
     //关闭路径
     [path closePath];
     
     //绘制感叹号
     //绘制直线
-    [path moveToPoint:CGPointMake(x, y + 20)];
-    CGPoint p4 = CGPointMake(x, y + 60);
+    [path moveToPoint:CGPointMake(x, x * 0.3)];
+    CGPoint p4 = CGPointMake(x, x * 0.6);
     [path addLineToPoint:p4];
     //绘制实心圆
-    [path moveToPoint:CGPointMake(x, y + 70)];
-    [path addArcWithCenter:CGPointMake(x, y + 70) radius:2 startAngle:0 endAngle:M_PI*2 clockwise:YES];
+    [path moveToPoint:CGPointMake(x, x * 0.7)];
+    [path addArcWithCenter:CGPointMake(x, x * 0.7) radius:2 startAngle:0 endAngle:M_PI*2 clockwise:YES];
     //新建图层——绘制上述路径
     showLayer.strokeColor = [UIColor orangeColor].CGColor;
     showLayer.path = path.CGPath;
